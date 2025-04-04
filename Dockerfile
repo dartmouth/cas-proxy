@@ -18,11 +18,15 @@ RUN sed -i \
 
 RUN sed -i \
   '/DocumentRoot "\/usr\/local\/apache2\/htdocs"/a\
-SSLProxyEngine On\n\
-ProxyPreserveHost On\n\
+SSLProxyEngine on\n\
+SSLProxyVerify none\n\
+SSLProxyCheckPeerName off\n\
+SSLProxyCheckPeerExpire off\n\
+ProxyErrorOverride off\n\
+ProxyPreserveHost on\n\
 ProxyPass \/ https:\/\/proxy.example.com:443\/\n\
 ProxyPassReverse \/ https:\/\/proxy.example.com:443\/\n\
-ProxyTimeout 60' \
+ProxyTimeout 300' \
   /usr/local/apache2/conf/extra/httpd-ssl.conf
 
 RUN cat <<EOF > /usr/local/apache2/conf/server.cnf
